@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Test</title>
+</head>
+<body>
+
+	<div>Driver list::</div>
+	<div id="driverData" style="float: left;"></div>
+	<br>
+	<br>
+	<br>
+	<div>Add new driver</div>
+
+	<script type="text/javascript">
+	
+	loadDrivers();
+	
+	function loadDrivers() {
+	    let DRIVERS_URL = "http://localhost:8085/tourguide/api/driver/all";
+
+	    let xhttp = new XMLHttpRequest();
+	    xhttp.onreadystatechange = function () {
+	        if (this.readyState == 4 && this.status == 200) {
+	            let driverDataList = JSON.parse(this.responseText);
+	            let driverList = "";
+
+	            for(let index = 0; index < driverDataList.length; index++){
+	                driverList += "<br/>" + "Name: " + driverDataList[index].name + "<br/>" + "Dob: " + driverDataList[index].dob + "<br/>"
+	            }
+	            document.getElementById("driverData").innerHTML = driverList;
+	        }
+	    };
+	    xhttp.open("GET", DRIVERS_URL, true);
+	    xhttp.send();
+	}
+	</script>
+</body>
+</html>
